@@ -1,0 +1,42 @@
+# 어플리케이션 파일
+*.apk
+*.ap_
+
+# VM dex 파일
+*.dex
+
+# Java 클래스 파일
+*.class
+
+# 생성 파일
+bin/
+gen/
+
+# gradle 파일
+.gradle/
+build/
+
+# 로컬 설정 파일
+local.properties
+
+# Mac 폴더S
+*.DS_Store
+
+# Windows 폴더
+Thumbs.db
+
+# Eclipse 프로젝트 파일
+.classpath
+.project
+
+# Eclipse 메타데이터
+.metadata/
+
+# Proguard 이클립스 생성 폴더
+proguard/
+
+# Intellij 프로젝트 파일
+*.iml
+*.ipr
+*.iws
+.idea/
