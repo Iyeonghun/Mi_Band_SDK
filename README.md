@@ -4,14 +4,14 @@
 
 이전에 개발되어있던 [panglian/miband-sdk-android](https://github.com/pangliang/miband-sdk-android) 라이브러리가 더이상 유지보수가 안되고 연결상의 문제가 있어 이전 라이브러리 구조 기반으로 다시 만든 Mi Band 라이브러리 입니다.
 
-## Description
+## <br>Description
 
-Mi Band 1S를 사용하기 위한 Android 라이브러리 입니다. 현재 아래와 같은 기능이 구현되어 있습니다. 추후 다른 기능들을 추가 할 예정 입니다.
+Mi Band 1S를 사용하기 위한 Android 라이브러리 입니다.<br>현재 아래와 같은 기능이 구현되어 있습니다. <br>추후 다른 기능들을 추가 할 예정 입니다.
 
 - 심박수 측정(1번, 약 10번 연속)
 - Led, 진동 알람
 
-## Adding to project
+## <br>Adding to project
 
 app의 `build.gradle`파일에 다음과 같이 추가 합니다.
 
@@ -19,13 +19,13 @@ app의 `build.gradle`파일에 다음과 같이 추가 합니다.
 compile 'com.jellygom:miband-sdk:0.1.0'
 ```
 
-## How to use
+## <br>How to use
 
 
 
-## Release Notes
+## <br>Release Notes
 
-#### 0.1.0 - 2016.09.04
+#### v0.1.0 - 2016.09.04
 
 - Mi Band 1S 연결 API 재작성
 - Mi Band를 흔들지 않아도 심박 측정가능
@@ -33,7 +33,7 @@ compile 'com.jellygom:miband-sdk:0.1.0'
 - Mi Band에 기록된 UserInfo를 가져올 수 있다
 - 모든 API에 CallBack을 통해 각 API가 종료 되었는지 확인 가능
 
-## License
+## <br>License
 
 ```
 Copyright 2016 Lee,YeoungHun
