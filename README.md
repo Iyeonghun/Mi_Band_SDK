@@ -8,7 +8,7 @@
 
 ## Description
 
-![예제 어플리케이션](./App_Example_Image.png=300px)
+![예제 어플리케이션](./App_Example_Image.png)
 
 Mi Band 1S를 사용하기 위한 Android 라이브러리 입니다.<br>현재 아래와 같은 기능이 구현되어 있으며 추후 다른 기능들을 추가 할 예정 입니다.
 
