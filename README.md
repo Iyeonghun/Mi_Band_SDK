@@ -22,8 +22,8 @@ Mi Band 1S를 사용하기 위한 Android 라이브러리 입니다.<br>현재 �
 
 app의 `build.gradle`파일에 다음과 같이 추가 합니다.
 
-```
-compile 'com.jellygom:miband-sdk:0.1.0'
+```groovy
+compile 'com.jellygom:miband-sdk:0.2.0'
 ```
 
 ## How to use

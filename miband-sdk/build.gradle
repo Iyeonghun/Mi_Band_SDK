@@ -5,7 +5,7 @@ publish {
     userOrg = 'iyeonghun'
     groupId = 'com.jellygom'
     artifactId = 'miband-sdk'
-    publishVersion = '0.1.0'
+    publishVersion = '0.2.0'
     desc = 'Iyeonghun Mi Band 1S sdk'
     website = 'https://github.com/Iyeonghun/MiBandSdk'
 }
