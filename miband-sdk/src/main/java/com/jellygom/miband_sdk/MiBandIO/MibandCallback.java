@@ -1,10 +1,5 @@
 package com.jellygom.miband_sdk.MiBandIO;
 
-/**
- * Create  : Iyeonghun
- * Date    : 2016. 9. 1.
- * Content : CallBack 인터페이스
- */
 public interface MibandCallback {
 
   int STATUS_SEARCH_DEVICE = 0xF2;
@@ -13,6 +8,8 @@ public interface MibandCallback {
   int STATUS_GET_USERINFO = 0xF1;
   int STATUS_SET_USERINFO = 0xF4;
   int STATUS_START_HEARTRATE_SCAN = 0xF6;
+  int STATUS_GET_BATTERY = 0xF9;
+  int STATUS_GET_ACTIVITY_DATA = 0xF8;
 
   void onSuccess(Object data, int status);
 

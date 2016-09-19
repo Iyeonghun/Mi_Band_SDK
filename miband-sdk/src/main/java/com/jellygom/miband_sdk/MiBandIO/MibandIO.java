@@ -9,11 +9,6 @@ import com.jellygom.miband_sdk.MiBandIO.Model.MibandUUID;
 import java.util.HashMap;
 import java.util.UUID;
 
-/**
- * Create  : Iyeonghun
- * Date    : 2016. 9. 1.
- * Content : Mi 밴드 Input / Output 정의
- */
 public class MibandIO extends BluetoothGattCallback {
 
   private static final String TAG = MibandIO.class.getSimpleName();

@@ -5,12 +5,13 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.jellygom.miband_sdk.MiBandIO.Listener.HeartrateListener;
+import com.jellygom.miband_sdk.MiBandIO.Listener.RealtimeStepListener;
 import com.jellygom.miband_sdk.MiBandIO.MibandCallback;
 import com.jellygom.miband_sdk.MiBandIO.Model.UserInfo;
 import com.jellygom.miband_sdk.Miband;
@@ -22,8 +23,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   private Miband miband;
   private BluetoothAdapter mBluetoothAdapter;
 
-  private TextView heart;
+  private TextView heart, step, battery;
   private TextView text;
+
+  private RealtimeStepListener realtimeStepListener = new RealtimeStepListener() {
+    @Override
+    public void onNotify(final int steps) {
+      runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+          step.setText(steps + " steps");
+          text.append(steps + " steps\n");
+        }
+      });
+    }
+  };
 
   private HeartrateListener heartrateNotifyListener = new HeartrateListener() {
     @Override
@@ -65,6 +79,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         case MibandCallback.STATUS_START_HEARTRATE_SCAN:
           Log.e(TAG, "성공: STATUS_START_HEARTRATE_SCAN");
           break;
+        case MibandCallback.STATUS_GET_BATTERY:
+          Log.e(TAG, "성공: STATUS_GET_BATTERY");
+          final int level = (int) data;
+          runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              battery.setText(level+ " % battery");
+              text.append(level + " % battery\n");
+            }
+          });
+          break;
+        case MibandCallback.STATUS_GET_ACTIVITY_DATA:
+          Log.e(TAG, "성공: STATUS_GET_ACTIVITY_DATA");
+          final int steps = (int) data;
+          runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              step.setText(steps+ " steps");
+              text.append(steps+ " steps\n");
+            }
+          });
+          break;
       }
     }
 
@@ -89,6 +125,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         case MibandCallback.STATUS_START_HEARTRATE_SCAN:
           Log.e(TAG, "실패: STATUS_START_HEARTRATE_SCAN");
           break;
+        case MibandCallback.STATUS_GET_BATTERY:
+          Log.e(TAG, "실패: STATUS_GET_BATTERY");
+          break;
+        case MibandCallback.STATUS_GET_ACTIVITY_DATA:
+          Log.e(TAG, "실패: STATUS_GET_ACTIVITY_DATA");
+          break;
       }
     }
   };
@@ -99,10 +141,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     setContentView(R.layout.activity_main);
 
     findViewById(R.id.button_vive).setOnClickListener(this);
+    findViewById(R.id.button_steps).setOnClickListener(this);
+    findViewById(R.id.button_realtime_steps).setOnClickListener(this);
+    findViewById(R.id.button_battery).setOnClickListener(this);
     findViewById(R.id.button_heart_start_one).setOnClickListener(this);
     findViewById(R.id.button_heart_start_many).setOnClickListener(this);
 
     heart = (TextView) findViewById(R.id.heart);
+    step = (TextView) findViewById(R.id.steps);
+    battery = (TextView) findViewById(R.id.battery);
     text = (TextView) findViewById(R.id.text);
 
     final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
@@ -110,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     miband = new Miband(getApplicationContext());
 
-    // Miband 디바이스 검색
     miband.searchDevice(mBluetoothAdapter, this.mibandCallback);
   }
 
@@ -119,6 +165,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int i = view.getId();
     if (i == R.id.button_vive) {
       miband.sendAlert(this.mibandCallback);
+    } else if (i == R.id.button_steps) {
+      miband.getCurrentSteps(this.mibandCallback);
+    } else if (i == R.id.button_realtime_steps) {
+      miband.setRealtimeStepListener(realtimeStepListener);
+    } else if (i == R.id.button_battery) {
+      miband.getBatteryLevel(this.mibandCallback);
     } else if (i == R.id.button_heart_start_one) {
       miband.startHeartRateScan(1, this.mibandCallback);
     } else if (i == R.id.button_heart_start_many) {

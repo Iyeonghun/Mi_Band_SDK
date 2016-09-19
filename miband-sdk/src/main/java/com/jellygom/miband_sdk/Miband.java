@@ -2,6 +2,7 @@ package com.jellygom.miband_sdk;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.util.Log;
 import com.jellygom.miband_sdk.MiBandIO.Listener.HeartrateListener;
@@ -15,11 +16,6 @@ import com.jellygom.miband_sdk.MiBandIO.Model.UserInfo;
 import java.util.Arrays;
 import java.util.Set;
 
-/**
- * Create  : Iyeonghun
- * Date    : 2016. 9. 1.
- * Content : Mi 밴드 라이브러리
- */
 public class Miband {
 
   private static final String TAG = Miband.class.getSimpleName();
@@ -45,7 +41,7 @@ public class Miband {
     if (pairDevices.size() > 0) {
       for (BluetoothDevice device : pairDevices) {
         String deviceMac = device.getAddress().substring(0, 8);
-        if (MibandUUID.MAC_FILTER_MI1S.equals(deviceMac) || MibandUUID.MAC_FILTER_MI2.equals(deviceMac)) {
+        if (MibandUUID.MAC_FILTER_MI1S.equals(deviceMac)) {
           mibandDevice = device;
           break;
         }
@@ -131,12 +127,37 @@ public class Miband {
     this.mibandIO.setNotifyListener(MibandUUID.UUID_SERVICE_HEART_RATE, MibandUUID.UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, new NotifyListener() {
       @Override
       public void onNotify(byte[] data) {
+//        Log.d(TAG, Arrays.toString(data));
         if (data.length == 2 && data[0] == 6) {
           int heartRate = data[1] & 0xFF;
           listener.onNotify(heartRate);
         }
       }
     });
+  }
+
+  /**
+   * 현재 걸음수를 가져온다
+   *
+   * @param callback
+   */
+  public void getCurrentSteps(final MibandCallback callback) {
+    MibandCallback cb = new MibandCallback() {
+      @Override
+      public void onSuccess(Object data, int status) {
+        byte[] ab = ((BluetoothGattCharacteristic)data).getValue();
+        if (ab.length == 4) {
+          int steps = ab[3] << 24 | (ab[2] & 0xFF) << 16 | (ab[1] & 0xFF) << 8 | (ab[0] & 0xFF);
+          callback.onSuccess((int) steps, MibandCallback.STATUS_GET_ACTIVITY_DATA);
+        }
+      }
+
+      @Override
+      public void onFail(int errorCode, String msg, int status) {
+        callback.onFail(errorCode, msg, status);
+      }
+    };
+    this.mibandIO.readCharacteristic(MibandUUID.UUID_CHARACTERISTIC_REALTIME_STEPS, cb);
   }
 
   /**
@@ -148,7 +169,7 @@ public class Miband {
     this.mibandIO.setNotifyListener(MibandUUID.UUID_SERVICE_MIBAND, MibandUUID.UUID_CHARACTERISTIC_REALTIME_STEPS, new NotifyListener() {
       @Override
       public void onNotify(byte[] data) {
-        Log.d(TAG, Arrays.toString(data));
+//        Log.d(TAG, Arrays.toString(data));
         if (data.length == 4) {
           int steps = data[3] << 24 | (data[2] & 0xFF) << 16 | (data[1] & 0xFF) << 8 | (data[0] & 0xFF);
           listener.onNotify(steps);
@@ -157,4 +178,24 @@ public class Miband {
     });
   }
 
+  /**
+   * 현재 배터리 잔량을 가져온다.
+   *
+   * @param callback
+   */
+  public void getBatteryLevel(final MibandCallback callback) {
+    MibandCallback cb = new MibandCallback() {
+      @Override
+      public void onSuccess(Object data, int status) {
+        int level = ((BluetoothGattCharacteristic) data).getValue()[0];
+        callback.onSuccess(level, MibandCallback.STATUS_GET_BATTERY);
+      }
+
+      @Override
+      public void onFail(int errorCode, String msg, int status) {
+        callback.onFail(errorCode, msg, status);
+      }
+    };
+    this.mibandIO.readCharacteristic(MibandUUID.UUID_CHARACTERISTIC_BATTERY, cb);
+  }
 }

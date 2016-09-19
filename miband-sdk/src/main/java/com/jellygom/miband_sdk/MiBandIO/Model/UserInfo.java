@@ -3,11 +3,6 @@ package com.jellygom.miband_sdk.MiBandIO.Model;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
-/**
- * Create  : Iyeonghun
- * Date    : 2016. 9. 2.
- * Content : pangliang/miband-sdk-android 참고
- */
 public class UserInfo {
 
   private int uid;
@@ -17,6 +12,10 @@ public class UserInfo {
   private byte weight;
   private String alias = "";
   private byte type;
+
+  public UserInfo() {
+
+  }
 
   public UserInfo fromByteData(byte[] data) {
     if (data.length < 20) {
