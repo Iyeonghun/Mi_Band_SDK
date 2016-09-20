@@ -32,13 +32,13 @@ compile 'com.jellygom:miband-sdk:0.2.0'
 
 ## Release Notes
 
-#### v0.2 - 2016.09.19
+#### [v0.2 - 2016.09.19](https://github.com/Iyeonghun/MiBandSdk/releases/tag/v0.2.0)
 
 - 현재 배터리 잔량을 가져 올 수 있게 되었다.
 - 오늘 현재 걸음수 및 실시간으로 걸음수를 가져 올 수 있게 되었다.
 - 예제 앱 변경
 
-#### v0.1 - 2016.09.04
+#### [v0.1 - 2016.09.04](https://github.com/Iyeonghun/MiBandSdk/releases/tag/v0.1.0)
 
 - Mi Band 1S 연결 API 재작성
 - Mi Band를 흔들지 않아도 심박 측정가능
