@@ -30,7 +30,7 @@ compile 'com.jellygom:miband-sdk:0.2.1'
 
 ## How to use
 
-> Miband 연결은 Xiaomi 공식 어플리케이션인 Mi Fit 에서 안드로이드 스마트폰과 페어링을 해야 하며 아래 동작을 1회 수행하여야 합니다.<br>
+> Miband 연결은 Xiaomi 공식 어플리케이션인 Mi Fit 에서 스마트폰과 페어링을 해야 하며 아래 동작을 1회 수행하여야 합니다.<br>
 >
 > Mi Fit 어플리케이션에서 기기 연결 후 심박 체크를 한번 해야 합니다.
 
