@@ -36,166 +36,168 @@ compile 'com.jellygom:miband-sdk:0.2.1'
 
 1. Miband 클래스를 생성합니다.
 
-```java
-Miband miband = new Miband(getApplicationContext());
-```
+   ```java
+   Miband miband = new Miband(getApplicationContext());
+   ```
 
 2. 스마트폰의 BluetoothAdapter를 받아와 `searchDevice()`의 매개변수에 넣어  `BluetoothDevice`를 받아옵니다.
 
-```java
-BluetoothAdapter bluetoothAdapter = ((BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
+   ```java
+   BluetoothAdapter bluetoothAdapter = ((BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
 
-miband.searchDevice(bluetoothAdapter, new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
-    // data == 연결될 미밴드 BluetoothDevice
-  }
+   miband.searchDevice(bluetoothAdapter, new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
+       // data == 연결될 미밴드 BluetoothDevice
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
-```
+     }
+   });
+   ```
 
 3. `connect()`를 통하여 미밴드와 연결 합니다. `setDisconnectedListener()`를 통하여 미밴드와 연결이 해제 되었을때를 알아 올수 있습니다.
 
-```java
-miband.connect(/*Bluetooth Device*/, new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
+   ```java
+   miband.connect(/*Bluetooth Device*/, new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
 
-  }
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
+     }
+   });
 
-miband.setDisconnectedListener(new NotifyListener() {
-  @Override
-  public void onNotify(byte[] data) {
-    // data == null
-  }
-});
-```
+   miband.setDisconnectedListener(new NotifyListener() {
+     @Override
+     public void onNotify(byte[] data) {
+       // data == null
+     }
+   });
+   ```
 
 4. `getUserInfo()`와 `setUserInfo()`를 수행하여 심박값을 가져 올수 있게 합니다. 이 동작은 심박값을 가져오기 위해서는 반드시 먼저 이루어져야 합니다.
 
-```java
-miband.getUserInfo(new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
-    // data == 사용자 정보 BluetoothGattCharacteristic 값, byte 배열로 받은 후 UserInfo로 변환한다
-    // UserInfo userInfo = new UserInfo().fromByteData(((BluetoothGattCharacteristic) data).getValue());
-  }
+   ```java
+   miband.getUserInfo(new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
+       // data == 사용자 정보 BluetoothGattCharacteristic 값, byte 배열로 받은 후 UserInfo로 변환한다
+       // UserInfo userInfo = new UserInfo().fromByteData(((BluetoothGattCharacteristic) data).getValue());
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
+     }
+   });
 
-miband.setUserInfo(/*UserInfo*/, new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
+   miband.setUserInfo(/*UserInfo*/, new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
 
-  }
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
-```
+     }
+   });
+   ```
 
 5. Miband에 동작을 수행하게 하는 메소드 입니다.
+
    1. `startHeartRateScan()`은 리스너를 먼저 등록 해두어야 합니다. 리스너를 통하여 값을 받아오기 때문입니다.
    2. 그 외에는 리스너 없이 작동 합니다.
 
-```java
-// Led + 진동 알림
-miband.sendAlert(new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
-	// data == null
-  }
+   ```java
+   // Led + 진동 알림
+   miband.sendAlert(new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
+   	// data == null
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
-// 심박수 체크 약 10회 (정확히 몇번 나오는지 알수 없음)
-miband.startHeartRateScan(0, new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
-	// data == null
-  }
+     }
+   });
+   // 심박수 체크 약 10회 (정확히 몇번 나오는지 알수 없음)
+   miband.startHeartRateScan(0, new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
+   	// data == null
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
-// 심박수 체크 1회
-miband.startHeartRateScan(1, new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
-	// data == null
-  }
+     }
+   });
+   // 심박수 체크 1회
+   miband.startHeartRateScan(1, new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
+   	// data == null
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
-// 현재 걸음수
-miband.getCurrentSteps(new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
-    int steps = (int) data;
-  }
+     }
+   });
+   // 현재 걸음수
+   miband.getCurrentSteps(new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
+       int steps = (int) data;
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
-// 현재 배터리 잔량
-miband.getBatteryLevel(new MibandCallback() {
-  @Override
-  public void onSuccess(Object data, int status) {
-    int batteryLevel = (int) data;
-  }
+     }
+   });
+   // 현재 배터리 잔량
+   miband.getBatteryLevel(new MibandCallback() {
+     @Override
+     public void onSuccess(Object data, int status) {
+       int batteryLevel = (int) data;
+     }
 
-  @Override
-  public void onFail(int errorCode, String msg, int status) {
+     @Override
+     public void onFail(int errorCode, String msg, int status) {
 
-  }
-});
-```
+     }
+   });
+   ```
 
-5. 각 리스너를 등록하여 알맞는 값을 가져올수 있게 됩니다. 
+6. 각 리스너를 등록하여 알맞는 값을 가져올수 있게 됩니다. 
+
    1. `setRealtimeStepListener()`는 다른것 없이 작동 합니다.
 
-```java
-// 심박수
-miband.setHeartRateScanListener(new HeartrateListener() {
-  @Override
-  public void onNotify(int heartRate) {
+   ```java
+   // 심박수
+   miband.setHeartRateScanListener(new HeartrateListener() {
+     @Override
+     public void onNotify(int heartRate) {
 
-  }
-});
-// 실시간 걸음수
-miband.setRealtimeStepListener(new RealtimeStepListener() {
-  @Override
-  public void onNotify(int steps) {
+     }
+   });
+   // 실시간 걸음수
+   miband.setRealtimeStepListener(new RealtimeStepListener() {
+     @Override
+     public void onNotify(int steps) {
 
-  }
-});
-```
+     }
+   });
+   ```
 
 #### Tip
 
