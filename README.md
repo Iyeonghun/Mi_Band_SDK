@@ -273,7 +273,7 @@ private final MibandCallback mibandCallback = new MibandCallback() {
 
 #### [v0.2.1 - 2016.09.20](https://github.com/Iyeonghun/MiBandSdk/releases/tag/v0.2.1)
 
-- 미밴드와 연결이 끊김 확인용 리스터 생성
+- 미밴드와 연결이 끊김 확인용 리스너 생성
 
 #### [v0.2 - 2016.09.19](https://github.com/Iyeonghun/MiBandSdk/releases/tag/v0.2.0)
 - 현재 배터리 잔량을 가져 올 수 있게 되었다.
