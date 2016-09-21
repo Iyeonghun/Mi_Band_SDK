@@ -18,6 +18,7 @@ public class MibandIO extends BluetoothGattCallback {
   private BluetoothGatt gatt;
   private MibandCallback currentCallback;
   private HashMap<UUID, NotifyListener> notifyListeners = new HashMap<>();
+  private NotifyListener disconnectedListener = null;
 
   public void setStatus(int status) {
     this.mStatus = status;
@@ -34,6 +35,10 @@ public class MibandIO extends BluetoothGattCallback {
   public void connect(final Context context, BluetoothDevice device, final MibandCallback callback) {
     MibandIO.this.currentCallback = callback;
     device.connectGatt(context, false, MibandIO.this);
+  }
+
+  public void setDisconnectedListener(NotifyListener disconnectedListener) {
+    this.disconnectedListener = disconnectedListener;
   }
 
   public void readCharacteristic(UUID characteristicUUID, MibandCallback callback) {
@@ -97,8 +102,10 @@ public class MibandIO extends BluetoothGattCallback {
     super.onConnectionStateChange(gatt, status, newState);
     if (newState == BluetoothProfile.STATE_CONNECTED) {
       gatt.discoverServices();
-    } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+    }else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
       gatt.close();
+      if (this.disconnectedListener != null)
+        this.disconnectedListener.onNotify(null);
     }
   }
 

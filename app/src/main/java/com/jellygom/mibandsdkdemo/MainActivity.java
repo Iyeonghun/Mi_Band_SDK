@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.jellygom.miband_sdk.MiBandIO.Listener.HeartrateListener;
+import com.jellygom.miband_sdk.MiBandIO.Listener.NotifyListener;
 import com.jellygom.miband_sdk.MiBandIO.Listener.RealtimeStepListener;
 import com.jellygom.miband_sdk.MiBandIO.MibandCallback;
 import com.jellygom.miband_sdk.MiBandIO.Model.UserInfo;
@@ -152,12 +153,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     battery = (TextView) findViewById(R.id.battery);
     text = (TextView) findViewById(R.id.text);
 
-    final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-    mBluetoothAdapter = bluetoothManager.getAdapter();
+
+    miband = new Miband(getApplicationContext());
+
+    mBluetoothAdapter = ((BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE)).getAdapter();
 
     miband = new Miband(getApplicationContext());
 
     miband.searchDevice(mBluetoothAdapter, this.mibandCallback);
+
+    miband.setDisconnectedListener(new NotifyListener() {
+      @Override
+      public void onNotify(byte[] data) {
+        miband.searchDevice(mBluetoothAdapter, mibandCallback);
+      }
+    });
   }
 
   @Override

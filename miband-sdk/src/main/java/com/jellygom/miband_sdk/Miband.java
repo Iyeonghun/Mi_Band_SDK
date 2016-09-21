@@ -66,6 +66,15 @@ public class Miband {
   }
 
   /**
+   * 미밴드 연결 해제 확인리스너.
+   *
+   * @param disconnectedListener
+   */
+  public void setDisconnectedListener(NotifyListener disconnectedListener) {
+    this.mibandIO.setDisconnectedListener(disconnectedListener);
+  }
+
+  /**
    * LED와 함께 진동알람을 2번 발생한다.
    *
    * @param callback
