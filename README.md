@@ -1,4 +1,6 @@
-### 12월 부터 작업 예정...<br><br>
+### ~~12월 부터 작업 예정...
+### 2월부터 작업 예정......
+<br>
 
 # MiBand SDK [ ![Download](https://api.bintray.com/packages/iyeonghun/maven/miband-sdk/images/download.svg) ](https://bintray.com/iyeonghun/maven/miband-sdk/_latestVersion)
 
