@@ -1,14 +1,15 @@
-### ~~12월 부터 작업 예정...~~
-### 2월부터 작업 예정......
-<br>
-
 # MiBand SDK [ ![Download](https://api.bintray.com/packages/iyeonghun/maven/miband-sdk/images/download.svg) ](https://bintray.com/iyeonghun/maven/miband-sdk/_latestVersion)
 
 이전에 개발되어있던 [panglian/miband-sdk-android](https://github.com/pangliang/miband-sdk-android) 라이브러리가 더이상 유지보수가 안되고 연결상의 문제가 있어 이전 라이브러리 구조 기반으로 다시 만든 Mi Band 라이브러리 입니다.
 
 #### To-do list
 
-- 현재 MiBand 2 버튼과 손목 들어올려 확인 하는 기능, 심박수 측정 기능을 추가하기 위해 작업 중 입니다.<br>
+- Library Structure edit
+- MiBand 1 Connection code edit
+- MiBand 1 HR code edit
+- Make MiBand 2 HR code
+- Make MiBand 2 Activity code
+<br>
 
 ## Description
 
